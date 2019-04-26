@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+
+<ui:composition template="template.xhtml">
+	<ui:define name="conteudo">
+		<f:event listener="#{clienteMB.getSolicitacoes()}"
+			type="preRenderView"></f:event>
+		<h:form id="formu">
+			<p:toolbar>
+				<f:facet name="left">
+					<p:outputLabel value="Solicitacoes"></p:outputLabel>
+				</f:facet>
+			</p:toolbar>
+
+			<p:dataTable id="dt" emptyMessage="Não existem dados cadastrados."
+				value="#{clienteMB.getSolicitacoes()}" var="solicitacao" rows="10"
+				paginator="true">
+				<p:column headerText="Número da Solicitação">
+					<h:outputText value="#{solicitacao.numeroSolicitacao}"></h:outputText>
+				</p:column>
+				<p:column headerText="Assunto">
+					<h:outputText value="#{solicitacao.assunto}"></h:outputText>
+				</p:column>
+				<p:column headerText="Tipo">
+					<h:outputText value="#{solicitacao.tipo}"></h:outputText>
+				</p:column>
+				<p:column headerText="Solicitante">
+					<h:outputText value="#{solicitacao.nomeSolicitante}"></h:outputText>
+				</p:column>
+				<p:column style="width: 30%" headerText="Ações">
+					<p:commandButton action="#{clienteMB.alterar(solicitacao)}"
+						icon="ui-icon-pencil">
+						<f:param name="acao" value="editar"></f:param>
+						<f:param name="cod" value="#{solicitacao.numeroSolicitacao}"></f:param>
+					</p:commandButton>
+					<p:commandButton update=":msg, :formu" action="#{clienteMB.excluir(solicitacao)}"
+						icon="ui-icon-closethick">
+					</p:commandButton>
+					
+					<p:commandButton action="#{clienteMB.imprimir(solicitacao)}"
+						icon="ui-icon-search">
+					</p:commandButton>
+				</p:column>
+
+			</p:dataTable>
+		</h:form>
+	</ui:define>
+
+</ui:composition>
+</html>

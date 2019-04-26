@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+
+<ui:composition template="/template.xhtml">
+	<ui:define name="conteudo">
+		
+		<h:form id="formu">
+			<p:panelGrid id="panel" columns="3">
+				<p:outputLabel value="Número: "></p:outputLabel>
+				<p:inputText value="#{clienteMB.numero}"></p:inputText>
+
+				<p:commandButton action="/tabelaSolicitacoes.xhtml?faces-redirect=true"
+					value="Pesquisar" 
+					update=":msg,:formu:panel"></p:commandButton>
+					
+				<p:button href="http://localhost:8080/PDSCREST/api/solicitacoes/"
+					value="api" 
+					update=":msg,:formu:panel"></p:button>
+				
+			</p:panelGrid>
+		</h:form>
+	</ui:define>
+
+</ui:composition>
+</html>
