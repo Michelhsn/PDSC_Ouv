@@ -20,7 +20,7 @@
 			<p:dataTable id="dt" emptyMessage="Não existem dados cadastrados."
 				value="#{clienteMB.getSolicitacoes()}" var="solicitacao" rows="10"
 				paginator="true">
-				<p:column headerText="Número da Solicitação">
+				<p:column headerText="Número da Solicitação" style="border:none">
 					<h:outputText value="#{solicitacao.numeroSolicitacao}"></h:outputText>
 				</p:column>
 				<p:column headerText="Assunto">
@@ -33,17 +33,17 @@
 					<h:outputText value="#{solicitacao.nomeSolicitante}"></h:outputText>
 				</p:column>
 				<p:column style="width: 30%" headerText="Ações">
-					<p:commandButton action="#{clienteMB.alterar(solicitacao)}"
-						icon="ui-icon-pencil">
+					<p:commandButton  action="#{clienteMB.alterar(solicitacao)}"
+						icon="fa fa-edit">
 						<f:param name="acao" value="editar"></f:param>
 						<f:param name="cod" value="#{solicitacao.numeroSolicitacao}"></f:param>
 					</p:commandButton>
 					<p:commandButton update=":msg, :formu" action="#{clienteMB.excluir(solicitacao)}"
-						icon="ui-icon-closethick">
+						icon="fa fa-trash-o">
 					</p:commandButton>
 					
 					<p:commandButton action="#{clienteMB.imprimir(solicitacao)}"
-						icon="ui-icon-search">
+						icon="fa fa-search">
 					</p:commandButton>
 				</p:column>
 

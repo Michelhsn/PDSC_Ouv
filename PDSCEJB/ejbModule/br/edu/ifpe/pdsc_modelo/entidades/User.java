@@ -24,7 +24,6 @@ public class User implements Serializable {
 	@Column(name = "nome", nullable = false)
 	private String nome;
 
-	@JsonbTransient //Essa annotation impede que o attributo seja inserido na resposta
 	@Column(name = "senha", nullable = false)
 	private String senha;
 

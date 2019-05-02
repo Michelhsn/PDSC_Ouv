@@ -38,5 +38,9 @@
 	<classpathentry kind="lib" path="C:/Users/miche/Downloads/JasperReport/JasperReport/jasperreports-5.5.1.jar"/>
 	<classpathentry kind="lib" path="C:/Users/miche/Downloads/JasperReport/JasperReport/poi-3.9.jar"/>
 	<classpathentry kind="lib" path="C:/Users/miche/Downloads/JasperReport/JasperReport/servlet-api-2.4.jar"/>
+	<classpathentry kind="lib" path="C:/Users/miche/Downloads/jjwt-api-0.10.6.jar"/>
+	<classpathentry kind="lib" path="C:/Users/miche/Downloads/jjwt-jackson-0.10.6 (1).jar"/>
+	<classpathentry kind="lib" path="C:/Users/miche/Downloads/jjwt-impl-0.10.6.jar"/>
+	<classpathentry kind="lib" path="C:/Users/miche/Downloads/jjwt-0.9.1.jar"/>
 	<classpathentry kind="output" path="target/classes"/>
 </classpath>

@@ -5,37 +5,72 @@
 	xmlns:f="http://xmlns.jcp.org/jsf/core"
 	xmlns:p="http://primefaces.org/ui"
 	xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+<h:outputStylesheet library="awesome" name="/css/fontawesome.css"></h:outputStylesheet>
 
 <ui:composition template="/template.xhtml">
 	<ui:define name="conteudo">
-	<f:event listener="#{clienteMB.carregaCadastro}" type="preRenderView"></f:event>
+		<f:event listener="#{clienteMB.carregaCadastro}" type="preRenderView"></f:event>
 		<p:toolbar>
 			<f:facet name="left">
 				<p:outputLabel value="Solicitacoes"></p:outputLabel>
 			</f:facet>
 		</p:toolbar>
-		<h:form method="post" id="formu" >
+		<h:form method="post" id="formsol">
 			<p:panelGrid id="panel" columns="2">
+
+				<p:outputLabel value="CPF: "></p:outputLabel>
+				<p:inputMask name="cpf" value="#{clienteMB.cpf}" mask="999.999.999-99"></p:inputMask>
+				
+				<p:outputLabel value="Nome: "></p:outputLabel>
+				<p:inputText name="nome" value="#{clienteMB.nome}"></p:inputText>
+
 				<p:outputLabel value="Número: "></p:outputLabel>
 				<p:inputText name="numero" value="#{clienteMB.numero}"></p:inputText>
 
 				<p:outputLabel value="Tipo: "></p:outputLabel>
-				<p:inputText name="tipo" value="#{clienteMB.tipo}"></p:inputText>
+				<p:selectOneMenu style="width:85%" id="tipo" value="#{clienteMB.tipo}">
+					<f:selectItem itemLabel="Selecione" itemValue="-1" />
+					<f:selectItem itemLabel="Denúncia" itemValue="denuncia" />
+					<f:selectItem itemLabel="Crítica" itemValue="critica" />
+					<f:selectItem itemLabel="Elogio" itemValue="elogio" />
+				</p:selectOneMenu>
+				
+				<p:outputLabel value="Email: "></p:outputLabel>
+				<p:inputText name="email" value="#{clienteMB.email}"></p:inputText>
+				
+				<p:outputLabel value="Fone: "></p:outputLabel>
+				<p:inputMask name="fone" value="#{clienteMB.fone}" mask="(99) 9999-9999"></p:inputMask>
 
 				<p:outputLabel value="Assunto: "></p:outputLabel>
 				<p:inputText name="assunto" value="#{clienteMB.assunto}"></p:inputText>
+				
+				<p:outputLabel value="Unidade: "></p:outputLabel>
+				<p:selectOneMenu style="width:85%" id="unidade" value="#{clienteMB.unidade}">
+					<f:selectItem itemLabel="Selecione" itemValue="-1" />
+					<f:selectItem itemLabel="DASE" itemValue="dase" />
+					<f:selectItem itemLabel="DAFG" itemValue="dafg" />
+					<f:selectItem itemLabel="DAIC" itemValue="daic" />
+					<f:selectItem itemLabel="DASS" itemValue="dass" />
+				</p:selectOneMenu>
 
-				<p:outputLabel value="Nome: "></p:outputLabel>
-				<p:inputText name="nome" value="#{clienteMB.nome}"></p:inputText>
+				<p:outputLabel value="Descrição: "></p:outputLabel>
+				<p:inputTextarea style="width:200px" name="descricao" value="#{clienteMB.descricao}"></p:inputTextarea>
+
+				<p:column></p:column>
+
+				<p:commandButton update=":msg" rendered="#{!(clienteMB.acao eq 'editar')}" style="float:right; margin-top:50px" value="Incluir"
+					action="#{clienteMB.setSolicitacoes()}"></p:commandButton>
+
+				<p:commandButton value="Alterar" update=":msg"
+					rendered="#{clienteMB.acao eq 'editar'}"
+					action="#{clienteMB.setSolicitacoesAlterar()}"></p:commandButton>
+
 			</p:panelGrid>
 
 			<p:panelGrid columns="2">
 				
-				<p:commandButton value="Cadastrar"
-					action="#{clienteMB.setSolicitacoes()}"></p:commandButton>
-					
-					<p:commandButton value="Alterar" update=":msg" rendered="#{clienteMB.acao eq 'editar'}"
-					action="#{clienteMB.setSolicitacoesAlterar()}"></p:commandButton>
+
+				
 			</p:panelGrid>
 		</h:form>
 		<!-- <form method="post" action="http://localhost:8080/PDSCREST/api/solicitacoes">

@@ -18,15 +18,20 @@ import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
+import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.xml.bind.DatatypeConverter;
 
 import br.edu.ifpe.pdsc_modelo.ejb.Login;
 import br.edu.ifpe.pdsc_modelo.entidades.User;
 import br.edu.ifpe.pdsc_modelo.util.ClientUtility;
+import br.edu.ifpe.pdsc_modelo.util.Jwts1;
 import br.edu.ifpe.pdsc_modelo.util.PasswordUtils;
+/*import io.jsonwebtoken.JwtBuilder;
 import io.jsonwebtoken.Jwts;
-import io.jsonwebtoken.SignatureAlgorithm;
+import io.jsonwebtoken.SignatureAlgorithm;*/
+import io.jsonwebtoken.*;
+
 
 /**
  * @author Antonio Goncalves http://www.antoniogoncalves.org --
@@ -72,6 +77,52 @@ public class UserEndpoint {
 			return Response.status(UNAUTHORIZED).build();
 		}
 	}
+	
+	@POST
+	@Path("/logar")
+	@Consumes(MediaType.APPLICATION_JSON)
+	public Response autenticar(User user) {
+
+		try {
+			// Authenticate the user using the credentials provided
+			Login loginbean = ClientUtility.getLoginBean();
+			User usuario = loginbean.login(user.getNome(), PasswordUtils.digestPassword(user.getSenha()));
+			if (usuario == null)
+				throw new SecurityException("Invalid user/password");
+			else {
+				
+			}
+
+			// Issue a token for the user
+			/*
+			 * String token = Jwts1.builder() .setSubject(user.getNome()) .claim("custom",
+			 * "myCustom") .signWith( SignatureAlgorithm.HS256,
+			 * DatatypeConverter.parseBase64Binary(
+			 * "tmMY7VZuZ1DrsTF8JNImtiZ6Im6nx+2lLMEWhvRHneE=") ) .compact();
+			 * 
+			 * 
+			 * //user.setToken(token); loginbean.updateUser(user);
+			 * 
+			 * // Return the token on the response
+			 * 
+			 */			
+			String token = "";
+			if (user.getNome().equals("admin")) {
+				token = "admin";
+			} else {
+				token = "comum";
+			}
+			
+			
+			return Response.ok().header(AUTHORIZATION, token).build();
+
+		} catch (SecurityException e) {
+			return Response.status(FORBIDDEN).build();
+		} catch (Exception e) {
+			System.out.println(e);
+			return Response.status(UNAUTHORIZED).build();
+		}
+	}
 
 
 	@POST
@@ -82,6 +133,20 @@ public class UserEndpoint {
 			User user = loginbean.cadastrarUsuario(login, PasswordUtils.digestPassword(password));
 			if (user != null)
 				return Response.ok(user).build();
+		} catch (NamingException e) {
+			e.printStackTrace();
+		}
+		return Response.status(NOT_FOUND).build();
+	}
+	
+	@POST
+	@Consumes(MediaType.APPLICATION_JSON)
+	public Response create(User user) {
+		try {
+			Login loginbean = ClientUtility.getLoginBean();
+			User usuario = loginbean.cadastrarUsuario(user.getNome(), PasswordUtils.digestPassword(user.getSenha()));
+			if (usuario != null)
+				return Response.ok(usuario).build();
 		} catch (NamingException e) {
 			e.printStackTrace();
 		}

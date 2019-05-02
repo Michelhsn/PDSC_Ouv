@@ -73,12 +73,13 @@ public class SolicitacaoBean implements SolicitacaoInterface {
 
 	// atualiza solicitação
 	public void updateSolicitacao(Solicitacao solicitacao) {
-		String jpql = ("UPDATE Solicitacao s SET s.nomeSolicitante= " + solicitacao.getNomeSolicitante()
-				+ " where s.numeroSolicitacao = " + solicitacao.getNumeroSolicitacao());
+
+		String jpql = ("UPDATE Solicitacao s SET s.nomeSolicitante =:nome where s.numeroSolicitacao =:numero");
 		Query query = entityManager.createQuery(jpql, Solicitacao.class);
+		query.setParameter("nome", solicitacao.getNomeSolicitante());
+		query.setParameter("numero", solicitacao.getNumeroSolicitacao());
 		query.executeUpdate();
 
-		// entityManager.merge(solicitacao);
 	}
 
 	public void removeSolicitacao(String num) {
@@ -87,7 +88,7 @@ public class SolicitacaoBean implements SolicitacaoInterface {
 		Query query = entityManager.createQuery(jpql, Solicitacao.class);
 		query.executeUpdate();
 
-		//entityManager.remove(solicitacao);
+		// entityManager.remove(solicitacao);
 		// entityManager.merge(solicitacao);
 	}
 

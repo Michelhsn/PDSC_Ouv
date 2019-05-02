@@ -1,12 +1,18 @@
 package br.edu.ifpe.pdsc_modelo.entidades;
 
 import java.io.Serializable;
+import java.util.Date;
+import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity
@@ -14,7 +20,7 @@ import javax.persistence.Table;
 public class Solicitacao implements Serializable {
 
 	private static final long serialVersionUID = 1L;
-	
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "id", nullable = false)
@@ -22,38 +28,43 @@ public class Solicitacao implements Serializable {
 
 	@Column(name = "num_solicitacao", nullable = false)
 	private String numeroSolicitacao;
-	
-	@Column(name = "nom_solicitante", nullable = false)
+
+	@Column(name = "nom_solicitante", nullable = true)
 	private String nomeSolicitante;
-	
+
 	@Column(name = "email_solicitante", nullable = false)
 	private String emailSolicitante;
-	
-	@Column(name = "fone_solicitante", nullable = false)
+
+	@Column(name = "fone_solicitante", nullable = true)
 	private String foneSolicitante;
-	
-	@Column(name = "des_solicitacao", nullable = false)
+
+	@Column(name = "des_solicitacao", nullable = true)
 	private String descricaoSolicitacao;
-	
-	@Column(name = "assunto", nullable = false)
+
+	@Column(name = "unidade", nullable = true)
+	private String unidade;
+
+	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
+	@JoinColumn(name = "encaminhamento", referencedColumnName = "id")
+	private List<Encaminhamento> encaminhamento;
+
+	@Column(name = "assunto", nullable = true)
 	private String assunto;
-	
-	@Column(name = "tipo", nullable = false)
+
+	@Column(name = "tipo", nullable = true)
 	private String tipo;
-	
-	@Column(name = "dat_abertura", nullable = false)
+
+	@Column(name = "dat_abertura", nullable = true)
 	private String dataAbertura;
-	
-	@Column(name = "dat_finalizacao", nullable = false)
-	private String dataFinalizacao;
-	
-	@Column(name = "cpf", nullable = false)
+
+	@Column(name = "dat_finalizacao", nullable = true)
+	private Date dataFinalizacao;
+
+	@Column(name = "cpf", nullable = true)
 	private String cpf;
-	
+
 	@Column(name = "solicitacaocol", nullable = true)
 	private String solicitacaocol;
-
-	
 
 	public String getNumeroSolicitacao() {
 		return numeroSolicitacao;
@@ -73,6 +84,22 @@ public class Solicitacao implements Serializable {
 
 	public String getEmailSolicitante() {
 		return emailSolicitante;
+	}
+
+	public String getUnidade() {
+		return unidade;
+	}
+
+	public void setUnidade(String unidade) {
+		this.unidade = unidade;
+	}
+
+	public List<Encaminhamento> getEncaminhamento() {
+		return encaminhamento;
+	}
+
+	public void setEncaminhamento(List<Encaminhamento> encaminhamento) {
+		this.encaminhamento = encaminhamento;
 	}
 
 	public void setEmailSolicitante(String emailSolicitante) {
@@ -119,11 +146,11 @@ public class Solicitacao implements Serializable {
 		this.dataAbertura = dataAbertura;
 	}
 
-	public String getDataFinalizacao() {
+	public Date getDataFinalizacao() {
 		return dataFinalizacao;
 	}
 
-	public void setDataFinalizacao(String dataFinalizacao) {
+	public void setDataFinalizacao(Date dataFinalizacao) {
 		this.dataFinalizacao = dataFinalizacao;
 	}
 
@@ -151,5 +178,4 @@ public class Solicitacao implements Serializable {
 		return id;
 	}
 
-	
 }

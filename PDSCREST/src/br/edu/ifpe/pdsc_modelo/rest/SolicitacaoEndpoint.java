@@ -7,6 +7,9 @@ import static javax.ws.rs.core.Response.Status.FORBIDDEN;
 import static javax.ws.rs.core.Response.Status.NOT_FOUND;
 import static javax.ws.rs.core.Response.Status.UNAUTHORIZED;
 
+import java.sql.Date;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -30,8 +33,6 @@ import br.edu.ifpe.pdsc_modelo.entidades.Solicitacao;
 import br.edu.ifpe.pdsc_modelo.entidades.User;
 import br.edu.ifpe.pdsc_modelo.util.ClientUtility;
 import br.edu.ifpe.pdsc_modelo.util.PasswordUtils;
-import io.jsonwebtoken.Jwts;
-import io.jsonwebtoken.SignatureAlgorithm;
 
 /**
  * @author Antonio Goncalves http://www.antoniogoncalves.org --
@@ -85,7 +86,7 @@ public class SolicitacaoEndpoint {
 			s.setTipo(solicitacao.getTipo());
 			s.setNomeSolicitante(solicitacao.getNomeSolicitante());
 			s.setAssunto(solicitacao.getAssunto());
-			Solicitacao solicitacao1 = solicitacaobean.cadastrarSolicitacao(s);
+			Solicitacao solicitacao1 = solicitacaobean.cadastrarSolicitacao(solicitacao);
 			if (solicitacao1 != null)
 				return Response.ok(solicitacao1).build();
 		} catch (NamingException e) {

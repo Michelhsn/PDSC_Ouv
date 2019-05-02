@@ -7,13 +7,14 @@
 	xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
 <h:head>
 	<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
+	<h:outputStylesheet library="awesome" name="css/fontawesome.css"></h:outputStylesheet>
 	<title>Ouvidoria</title>
 </h:head>
 <h:body>
 	<p:growl id="msg"></p:growl>
 	<p:layout fullPage="true">
 
-		<p:layoutUnit position="north" size="100" header="Ouvidoria IFPE"
+		<p:layoutUnit position="north" size="100" header="Ouvidoria IFPE - PDSC"
 			resizable="true" closable="false" collapsible="false">
 		</p:layoutUnit>
 
@@ -29,12 +30,15 @@
 					<p:submenu label="Início">
 						<p:menuitem value="Página Inicial" outcome="/index.xhtml" />
 					</p:submenu>
-					<p:submenu label="Cadastro">
+					<p:submenu rendered="#{clienteMB.adm}" label="Cadastro">
 						<p:menuitem value="Solicitação" outcome="/paginas/cadastroSolicitacoes.xhtml" />
 						<p:menuitem value="Unidade" outcome="/index.xhtml" />
+						<p:menuitem value="Usuário" outcome="/index.xhtml" />
 					</p:submenu>
-					<p:submenu label="Consulta">
+					<p:submenu rendered="#{clienteMB.adm or clienteMB.comum}" label="Consulta">
+						<p:menuitem value="Recurso" outcome="/consultaSolicitacoes.xhtml?faces-redirect=true" />
 						<p:menuitem value="Solicitação" outcome="/consultaSolicitacoes.xhtml" />
+						<p:menuitem value="Encaminhamento" outcome="/consultaSolicitacoes.xhtml" />
 					</p:submenu>
 				</p:panelMenu>
 			</h:form>

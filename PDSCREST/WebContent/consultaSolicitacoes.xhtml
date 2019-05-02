@@ -18,9 +18,12 @@
 					value="Pesquisar" 
 					update=":msg,:formu:panel"></p:commandButton>
 					
-				<p:button href="http://localhost:8080/PDSCREST/api/solicitacoes/"
+				<p:button rendered="#{clienteMB.nomeUsuario eq 'admin'}" href="http://localhost:8080/PDSCREST/api/solicitacoes/"
 					value="api" 
 					update=":msg,:formu:panel"></p:button>
+				<p:commandButton rendered="#{clienteMB.nomeUsuario eq 'admin'}" action="/tabelaSolicitacoes.xhtml?faces-redirect=true"
+					value="Pesquisar Todos" 
+					update=":msg,:formu:panel"></p:commandButton>
 				
 			</p:panelGrid>
 		</h:form>
