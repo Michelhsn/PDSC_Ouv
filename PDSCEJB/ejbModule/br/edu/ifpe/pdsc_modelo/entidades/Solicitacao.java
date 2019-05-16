@@ -44,9 +44,24 @@ public class Solicitacao implements Serializable {
 	@Column(name = "unidade", nullable = true)
 	private String unidade;
 
-	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
-	@JoinColumn(name = "encaminhamento", referencedColumnName = "id")
-	private List<Encaminhamento> encaminhamento;
+	/*
+	 * @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval =
+	 * true)
+	 * 
+	 * @JoinColumn(name = "encaminhamento", referencedColumnName = "id") private
+	 * List<Encaminhamento> encaminhamento;
+	 */
+	
+	@Column(name = "encaminhamento", nullable = true)
+	private String encaminhamento;
+
+	public String getEncaminhamento() {
+		return encaminhamento;
+	}
+
+	public void setEncaminhamento(String encaminhamento) {
+		this.encaminhamento = encaminhamento;
+	}
 
 	@Column(name = "assunto", nullable = true)
 	private String assunto;
@@ -94,13 +109,12 @@ public class Solicitacao implements Serializable {
 		this.unidade = unidade;
 	}
 
-	public List<Encaminhamento> getEncaminhamento() {
-		return encaminhamento;
-	}
-
-	public void setEncaminhamento(List<Encaminhamento> encaminhamento) {
-		this.encaminhamento = encaminhamento;
-	}
+	/*
+	 * public List<Encaminhamento> getEncaminhamento() { return encaminhamento; }
+	 * 
+	 * public void setEncaminhamento(List<Encaminhamento> encaminhamento) {
+	 * this.encaminhamento = encaminhamento; }
+	 */
 
 	public void setEmailSolicitante(String emailSolicitante) {
 		this.emailSolicitante = emailSolicitante;

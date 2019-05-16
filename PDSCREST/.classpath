@@ -42,5 +42,12 @@
 	<classpathentry kind="lib" path="C:/Users/miche/Downloads/jjwt-jackson-0.10.6 (1).jar"/>
 	<classpathentry kind="lib" path="C:/Users/miche/Downloads/jjwt-impl-0.10.6.jar"/>
 	<classpathentry kind="lib" path="C:/Users/miche/Downloads/jjwt-0.9.1.jar"/>
+	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/jasperreports-5.5.1.jar"/>
+	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/commons-beanutils-1.7.0.jar"/>
+	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/commons-collections-3.1.jar"/>
+	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/commons-digester-1.7.jar"/>
+	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/commons-logging-1.1.1.jar"/>
+	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/groovy-all-1.5.3.jar"/>
+	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/itext-2.1.7.jar"/>
 	<classpathentry kind="output" path="target/classes"/>
 </classpath>
