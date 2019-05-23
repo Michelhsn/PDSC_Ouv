@@ -1,5 +1,6 @@
 package br.edu.ifpe.pdsc_modelo.relatorio;
  
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.OutputStream;
@@ -28,7 +29,11 @@ public class GeraRelatorio implements Serializable
 	/**
 	 * 
 	 */
-	private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 5379701255398653504L;
+
+	/**
+	 * 
+	 */
 
 	private String path; //Caminho base
 	
@@ -45,12 +50,25 @@ public class GeraRelatorio implements Serializable
 	//Imprime/gera uma lista de Clientes
 	public void imprimir(List<Solicitacao> solicitacoes) throws Exception	
 	{
+		
+		FacesContext context = FacesContext.getCurrentInstance();
+        HttpServletResponse response = (HttpServletResponse) context.getExternalContext().getResponse();
 		java.io.InputStream template = GeraRelatorio.class.getResourceAsStream("/br/edu/ifpe/pdsc_modelo/relatorio/" +
-				 "relatorioSolicitacao.jrxml");
+				 "Simple_Blue.jrxml");
 		JasperReport report = JasperCompileManager.compileReport(template);
 		
 		JasperPrint print = JasperFillManager.fillReport(report, null, new JRBeanCollectionDataSource(solicitacoes));
- 
+		ByteArrayOutputStream baos = new ByteArrayOutputStream();
+		JasperExportManager.exportReportToPdfStream(print, baos);
+		response.reset();
+		response.setContentType("application/pdf");
+		response.setContentLength(baos.size());
+		response.setHeader("Content-disposition", "attachment; filename=relatorioSolicitacao.pdf");
+		response.getOutputStream().write(baos.toByteArray());
+		response.getOutputStream().flush();
+		response.getOutputStream().close();
+		context.responseComplete();
+		
 		//JasperExportManager.exportReportToPdfFile(print, "C:/Users/miche/eclipse-workspace/Relatorio_Solicitacao.pdf");	
 		
 		/*
@@ -62,23 +80,26 @@ public class GeraRelatorio implements Serializable
 		 * JasperFillManager.fillReport(report1, null, new
 		 * JRBeanCollectionDataSource(solicitacoes));
 		 */
-		OutputStream os = null;
-			FacesContext context = FacesContext.getCurrentInstance();
-	        HttpServletResponse response = (HttpServletResponse) context.getExternalContext().getResponse();
-	        os = response.getOutputStream();
-	        byte[] pdf = null;
-	        pdf = JasperExportManager.exportReportToPdf(print);
-	        response.setContentType("application/pdf");
-	        response.setContentLength(pdf.length);
-	        response.setHeader("Content-disposition", "attachment; filename=\""+"relatorioSolici"+"\"");
+		//OutputStream os = null;
+			
+	        
+	        //byte[] pdf = null;
+	        //pdf = JasperExportManager.exportReportToPdf(print);
+	       // response.setContentType("application/x-download");
+	       // response.setContentLength(pdf.length);
+	       // response.setHeader("Content-disposition", "attachment; filename=\""+"relatorioSolici.pdf"+"\"");
+	        
+	        /*os = response.getOutputStream();
+	        os.flush();
+	        os.close();*/
+	        //context.responseComplete();
 
-	        context.responseComplete();
-
-	        os.write(pdf);
-	        os.close();
+	        //os.write(pdf);
+	       // 
 		
 		//File pdf1 = File.createTempFile("output.", ".pdf");
-		//JasperExportManager.exportReportToPdfStream(print, new FileOutputStream(pdf1));
+		
+		//context.responseComplete();
 	}
  
 	public String getPathToReportPackage() {

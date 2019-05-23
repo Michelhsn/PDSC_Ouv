@@ -44,7 +44,10 @@
 		<mime-type>image/svg-xml</mime-type>
 	</mime-mapping>
 
-
+	<context-param>
+      <param-name>org.apache.myfaces.SERIALIZE_STATE_IN_SESSION</param-name>
+      <param-value>false</param-value>
+    </context-param>
 
 
 

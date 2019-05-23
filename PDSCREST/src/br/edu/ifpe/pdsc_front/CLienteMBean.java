@@ -7,11 +7,13 @@ import br.edu.ifpe.pdsc_modelo.relatorio.GeraRelatorio;
 import br.edu.ifpe.pdsc_modelo.util.FacesUtil;
 
 import com.google.gson.Gson;
+import com.google.gson.JsonArray;
 import com.google.gson.reflect.TypeToken;
 import com.sun.jersey.api.client.Client;
 import com.sun.jersey.api.client.ClientResponse;
 import com.sun.jersey.api.client.WebResource;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -27,8 +29,12 @@ import javax.ws.rs.core.Response;
 @SuppressWarnings("deprecation")
 @ManagedBean(name = "clienteMB")
 @SessionScoped
-public class CLienteMBean {
+public class CLienteMBean implements Serializable{
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 3941503136576997013L;
 	private String numero;
 	private String nome;
 	private String assunto;
@@ -248,11 +254,16 @@ public class CLienteMBean {
 	}
 
 	public void imprimir(Solicitacao solicitacao) {
-		List<Solicitacao> solicitacoes = new ArrayList<Solicitacao>();
-		solicitacoes.add(solicitacao);
+		//List<Solicitacao> solicitacoes = new ArrayList<Solicitacao>();
+		//solicitacoes.add(solicitacao);
+		Client s = Client.create();
+		WebResource wr = s.resource("http://localhost:8080/PDSCREST/api/solicitacoes");
+		String json = wr.get(String.class);
+		Gson gson = new Gson();
 		GeraRelatorio relatorio = new GeraRelatorio();
 		try {
-			relatorio.imprimir(solicitacoes);
+			relatorio.imprimir(gson.fromJson(json, new TypeToken<List<Solicitacao>>() {
+			}.getType()));
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
