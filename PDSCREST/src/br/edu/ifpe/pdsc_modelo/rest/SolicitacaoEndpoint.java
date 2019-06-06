@@ -37,7 +37,6 @@ import br.edu.ifpe.pdsc_modelo.ejb.Login;
 import br.edu.ifpe.pdsc_modelo.ejb.SolicitacaoInterface;
 import br.edu.ifpe.pdsc_modelo.entidades.Solicitacao;
 import br.edu.ifpe.pdsc_modelo.entidades.User;
-import br.edu.ifpe.pdsc_modelo.relatorio.GeraRelatorio;
 import br.edu.ifpe.pdsc_modelo.util.ClientUtility;
 import br.edu.ifpe.pdsc_modelo.util.PasswordUtils;
 import net.sf.jasperreports.engine.JRException;
@@ -104,7 +103,7 @@ public class SolicitacaoEndpoint implements Serializable{
 				solicitacaoBean = ClientUtility.getSolicitacaoBean();
 				List<Solicitacao> solicitacoes = solicitacaoBean.getSolicitacoes();
 				
-				java.io.InputStream template = GeraRelatorio.class.getResourceAsStream("/br/edu/ifpe/pdsc_modelo/relatorio/" +
+				java.io.InputStream template = this.getClass().getResourceAsStream("/br/edu/ifpe/pdsc_modelo/relatorio/" +
 						 "relatorio_solicitante.jrxml");
 				JasperReport report = JasperCompileManager.compileReport(template);
 				JasperPrint print = JasperFillManager.fillReport(report, null, new JRBeanCollectionDataSource(solicitacoes));
@@ -114,7 +113,7 @@ public class SolicitacaoEndpoint implements Serializable{
 				res.reset();
 				res.setContentType("application/pdf");
 				res.setContentLength(baos.size());
-				res.setHeader("Content-disposition", "attachment; filename=relatorioSolicitacao.pdf");
+				res.setHeader("Content-disposition", "inline; filename=relatorioSolicitacao.pdf");
 				res.getOutputStream().write(baos.toByteArray());
 				res.getOutputStream().flush();
 				res.getOutputStream().close();

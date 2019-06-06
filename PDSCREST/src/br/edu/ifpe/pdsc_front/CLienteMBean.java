@@ -3,7 +3,6 @@ package br.edu.ifpe.pdsc_front;
 import br.edu.ifpe.pdsc_modelo.entidades.Solicitacao;
 import br.edu.ifpe.pdsc_modelo.entidades.TipoEnum;
 import br.edu.ifpe.pdsc_modelo.entidades.User;
-import br.edu.ifpe.pdsc_modelo.relatorio.GeraRelatorio;
 import br.edu.ifpe.pdsc_modelo.util.FacesUtil;
 
 import com.google.gson.Gson;
@@ -25,6 +24,8 @@ import javax.ws.rs.client.Invocation;
 import javax.ws.rs.client.WebTarget;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+
+import org.primefaces.context.RequestContext;
 
 @SuppressWarnings("deprecation")
 @ManagedBean(name = "clienteMB")
@@ -253,22 +254,18 @@ public class CLienteMBean implements Serializable{
 		}
 	}
 
-	public void imprimir(Solicitacao solicitacao) {
-		//List<Solicitacao> solicitacoes = new ArrayList<Solicitacao>();
-		//solicitacoes.add(solicitacao);
-		Client s = Client.create();
-		WebResource wr = s.resource("http://localhost:8080/PDSCREST/api/solicitacoes");
-		String json = wr.get(String.class);
-		Gson gson = new Gson();
-		GeraRelatorio relatorio = new GeraRelatorio();
-		try {
-			relatorio.imprimir(gson.fromJson(json, new TypeToken<List<Solicitacao>>() {
-			}.getType()));
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-	}
+	/*
+	 * public void imprimir(Solicitacao solicitacao) { //List<Solicitacao>
+	 * solicitacoes = new ArrayList<Solicitacao>(); //solicitacoes.add(solicitacao);
+	 * Client s = Client.create(); WebResource wr =
+	 * s.resource("http://localhost:8080/PDSCREST/api/solicitacoes/relatorio");
+	 * //RequestContext.getCurrentInstance().
+	 * execute("window.open(href ='http://localhost:8080/PDSCREST/api/solicitacoes/relatorio"
+	 * ); //wr.get(String.class); Gson gson = new Gson(); GeraRelatorio relatorio =
+	 * new GeraRelatorio(); try { //relatorio.imprimir(gson.fromJson(json, new
+	 * TypeToken<List<Solicitacao>>() { //}.getType())); } catch (Exception e) { //
+	 * TODO Auto-generated catch block e.printStackTrace(); } }
+	 */
 
 	/*
 	 * public List<Solicitacao> getSolicitacoes() { Client s = Client.create();

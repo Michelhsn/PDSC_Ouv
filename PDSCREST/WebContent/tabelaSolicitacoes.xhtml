@@ -42,7 +42,11 @@
 						icon="fa fa-trash-o">
 					</p:commandButton>
 					
-					<p:commandButton ajax="false"  action="#{clienteMB.imprimir(solicitacao)}"
+					<!-- <p:link id="idNormandie" value="Imprimir" href="http://localhost:8080/PDSCREST/api/solicitacoes/relatorio" target="_blank"/> -->
+					
+					<p:button id="a" value="Imprimir" href="http://localhost:8080/PDSCREST/api/solicitacoes/relatorio" target="_blank"/>
+					
+					<p:commandButton target="_blank" ajax="false"  action="#{clienteMB.imprimir(solicitacao)}"
 						icon="fa fa-search">
 					</p:commandButton>
 				</p:column>
